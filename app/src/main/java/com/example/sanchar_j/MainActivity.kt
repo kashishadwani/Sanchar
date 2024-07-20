@@ -1,13 +1,17 @@
 package com.example.sanchar_j
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.permissionx.guolindev.PermissionX
+import com.permissionx.guolindev.request.ExplainScope
 import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallService
 import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationConfig
 import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationService
@@ -18,10 +22,21 @@ class MainActivity : AppCompatActivity() {
     lateinit var usernameTextField:EditText
     private lateinit var button: Button
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        PermissionX.init(this)
+            .permissions(Manifest.permission.SYSTEM_ALERT_WINDOW)
+            .onExplainRequestReason { scope, deniedList ->
+                val message = "We need your consent for the following permissions in order to use the offline call function properly"
+                scope.showRequestReasonDialog(deniedList, message, "Allow", "Deny")
+            }
+            .request { allGranted, grantedList, deniedList ->
+                // Handle the result of the permission request
+            }
 
         userIdTextField = findViewById(R.id.user_id_text_field)
         usernameTextField = findViewById(R.id.username_text_field)
