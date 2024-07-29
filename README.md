@@ -1,4 +1,4 @@
-Sanchar - a seamless video and audio calling app! 📱✨
+# **Sanchar - a seamless video and audio calling app! 📱✨**
 
 🔹 Technologies Used:
 Java, Kotlin, ZEGOCLOUD
